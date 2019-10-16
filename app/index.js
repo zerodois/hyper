@@ -106,7 +106,7 @@ console.log('electron will open', url);
 
 app.on('ready', () =>
   installDevExtensions(isDev)
-    .then(() => {
+    .then(async () => {
       function createWindow(fn, options = {}) {
         const cfg = plugins.getDecoratedConfig();
 
@@ -171,6 +171,8 @@ app.on('ready', () =>
       }
 
       // when opening create a new window
+      const delay = time => new Promise(res => setTimeout(res, time));
+      await delay(1000);
       createWindow();
 
       // expose to plugins
