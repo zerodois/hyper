@@ -5,7 +5,6 @@ const uuid = require('uuid');
 const fileUriToPath = require('file-uri-to-path');
 const isDev = require('electron-is-dev');
 const updater = require('../updater');
-const toElectronBackgroundColor = require('../utils/to-electron-background-color');
 const {icon, cfgDir} = require('../config/paths');
 const createRPC = require('../rpc');
 const notify = require('../notify');
