@@ -28,7 +28,6 @@ module.exports = class Window {
       {
         minWidth: 370,
         minHeight: 190,
-        backgroundColor: toElectronBackgroundColor(cfg.backgroundColor || '#000'),
         titleBarStyle: 'hiddenInset',
         title: 'Hyper.app',
         // we want to go frameless on Windows and Linux
@@ -51,11 +50,6 @@ module.exports = class Window {
     const rpc = createRPC(window);
     const sessions = new Map();
 
-    const updateBackgroundColor = () => {
-      const cfg_ = app.plugins.getDecoratedConfig();
-      window.setBackgroundColor(toElectronBackgroundColor(cfg_.backgroundColor || '#000'));
-    };
-
     // set working directory
     let workingDirectory = cfgDir;
     if (process.argv[1] && isAbsolute(process.argv[1])) {
@@ -76,15 +70,11 @@ module.exports = class Window {
         notify('Shell configuration changed!', 'Open a new tab or window to start using the new shell');
       }
 
-      // update background color if necessary
-      updateBackgroundColor();
-
       cfg = cfg_;
     });
 
     rpc.on('init', () => {
       window.show();
-      updateBackgroundColor();
 
       // If no callback is passed to createWindow,
       // a new session will be created by default.
@@ -318,7 +308,6 @@ module.exports = class Window {
       if (!err) {
         load();
         window.webContents.send('plugins change');
-        updateBackgroundColor();
       }
     });
 
